@@ -20,7 +20,10 @@ sendMessage(data[randomNumber(1, 1643)]);
 function sendMessage(inputMessage) {
   var author = inputMessage.author;
   var quote = inputMessage.Quote;
-  var botMessage = `${quote}  -- ${author}`;
+  var botMessage = `Hi , 
+Today's Quote for you : 
+${quote}  
+-- ${author}`;
   console.log(botMessage);
   axios
     .get(
