@@ -1,5 +1,6 @@
 const axios = require("axios").default;
 const schedule = require("node-schedule");
+var CronJob = require("cron").CronJob;
 const fs = require("fs");
 require("dotenv").config();
 const data = require("./data.json");
@@ -10,11 +11,21 @@ function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-const job = schedule.scheduleJob(process.env.TIME, () => {
-  console.log("cron job executed");
-  sendMessage(data[randomNumber(1, 1643)]);
+// const job = schedule.scheduleJob(process.env.TIME, () => {
+//   console.log("cron job executed");
+//   sendMessage(data[randomNumber(1, 1643)]);
+// });
+
+var dailyJob = new CronJob({
+  cronTime: process.env.TIME,
+  onTick: function () {
+    // Do daily function
+    sendMessage(data[randomNumber(1, 1643)]);
+  },
+  start: false,
 });
 
+dailyJob.start();
 //sendMessage(data[randomNumber(1, 1643)]);
 
 function sendMessage(inputMessage) {
