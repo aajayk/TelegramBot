@@ -10,12 +10,12 @@ function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-const job = schedule.scheduleJob(process.env.TIME, () => {
-  console.log("hi");
-  sendMessage(data[randomNumber(1, 1643)]);
-});
+// const job = schedule.scheduleJob(process.env.TIME, () => {
+//   console.log("cron job executed");
+//   sendMessage(data[randomNumber(1, 1643)]);
+// });
 
-//sendMessage(data[randomNumber(1, 1643)]);
+sendMessage(data[randomNumber(1, 1643)]);
 
 function sendMessage(inputMessage) {
   var author = inputMessage.author;
