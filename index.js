@@ -4,7 +4,8 @@ var CronJob = require("cron").CronJob;
 const fs = require("fs");
 require("dotenv").config();
 const data = require("./data.json");
-//console.log(process.env.BOT_TOKEN);
+let chatIds = process.env.CHAT_IDS.split(",");
+console.log(chatIds);
 
 console.log(data.length);
 function randomNumber(min, max) {
@@ -20,7 +21,9 @@ var dailyJob = new CronJob({
   cronTime: process.env.TIME,
   onTick: function () {
     // Do daily function
-    sendMessage(data[randomNumber(1, 1643)]);
+    chatIds.forEach((id) => {
+      sendMessage(data[randomNumber(1, 1643)], id);
+    });
   },
   start: false,
 });
@@ -28,7 +31,7 @@ var dailyJob = new CronJob({
 dailyJob.start();
 //sendMessage(data[randomNumber(1, 1643)]);
 
-function sendMessage(inputMessage) {
+function sendMessage(inputMessage, id) {
   var author = inputMessage.author;
   var quote = inputMessage.Quote;
   var botMessage = `Hi , 
@@ -38,7 +41,7 @@ ${quote}
   console.log(botMessage);
   axios
     .get(
-      `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${process.env.CHAT_ID}&text=${botMessage}`
+      `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage?chat_id=${id}&text=${botMessage}`
     )
     .then((response) => {
       // handle success
